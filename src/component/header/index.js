@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import auth from '../../common/firebase/auth';
 
 import { Button, Avatar, Layout, Menu, Dropdown, message, Badge } from 'antd';
-import { LoginOutlined, SearchOutlined, BellOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { FileAddOutlined, LoginOutlined, SearchOutlined, BellOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 
 import './style.css';
 
@@ -66,9 +66,8 @@ class Header extends Component {
                         </span>
                     </div>
                     <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '50%'}}>
-                        <SearchOutlined style={{color: 'white', fontSize: '18pt', margin: '12px'}} />
+                        {this.props.children}
                         <BellOutlined style={{color: 'white', fontSize: '18pt', margin: '12px'}} />
-                        {this.state.isCandidate && <Button>Add CV</Button>}
                         {this.state.isLogin && <Dropdown overlay={menu} size="large" placement="bottomRight" >
                             <Avatar size="medium" style={{margin: '12px'}} icon={<UserOutlined />} />
                         </Dropdown>}
