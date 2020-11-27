@@ -5,12 +5,9 @@ import auth from '../../common/firebase/auth';
 import { Button, Avatar, Layout, Menu, Dropdown, message, Badge } from 'antd';
 import { LoginOutlined, SearchOutlined, BellOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 
-import UserInfo from '../user-info';
-
 import './style.css';
 
 let logout = async () => {
-    console.log(1);
     await auth.logoutAccount();
     window.location.reload();
 }
@@ -33,19 +30,21 @@ class Header extends Component {
         super(props);
         this.state = {
             isLogin: false,
-            isCandidate: false
+            isCandidate: false,
+            isRecruiter: false
         }
     }
 
     componentDidMount() {
         if (localStorage.uid) {
             this.setState({isLogin: true});
-            if (localStorage.accounttype === '0') this.setState({isCandidate: false});
-            else this.setState({isCandidate: true});
+            if (localStorage.accounttype === '0') this.setState({isCandidate: true, isRecruiter: false});
+            else this.setState({isCandidate: false, isRecruiter: true});
         } else { 
             this.setState({
                 isLogin: false,
-                isCandidate: false
+                isCandidate: false,
+                isRecruiter: false
             });
         }
     }
@@ -69,6 +68,7 @@ class Header extends Component {
                     <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '50%'}}>
                         <SearchOutlined style={{color: 'white', fontSize: '18pt', margin: '12px'}} />
                         <BellOutlined style={{color: 'white', fontSize: '18pt', margin: '12px'}} />
+                        {this.state.isCandidate && <Button>Add CV</Button>}
                         {this.state.isLogin && <Dropdown overlay={menu} size="large" placement="bottomRight" >
                             <Avatar size="medium" style={{margin: '12px'}} icon={<UserOutlined />} />
                         </Dropdown>}

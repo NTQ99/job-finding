@@ -28,7 +28,13 @@ class Login extends Component {
 	}
 
 	componentDidMount() {
-        if (localStorage.uid) this.props.history.push('/home');
+        if (localStorage.uid) {
+			if (localStorage.accounttype === '0') {
+				this.props.history.push('/home');
+			} else {
+				this.props.history.push('/recruiter');
+			}
+		}
     }
 
 	handleChange(event) {
@@ -51,7 +57,6 @@ class Login extends Component {
 		event.preventDefault();
 		let userData = await auth.loginAccount(this.state);
 		if (userData !== undefined) {
-			console.log(userData);
 			localStorage.setItem('uid', userData.uid);
 			localStorage.setItem('accounttype', userData.accounttype);
 			if (userData.accounttype === '0') {
@@ -68,7 +73,11 @@ class Login extends Component {
 		if (uid !== undefined) {
 			localStorage.setItem('uid', uid);
 			localStorage.setItem('accounttype', this.state.accounttype);
-			this.props.history.push('/recruiter');
+			if (this.state.accounttype === '0') {
+				this.props.history.push('/home');
+			} else {
+				this.props.history.push('/recruiter');
+			}
 		}
 	}
 
