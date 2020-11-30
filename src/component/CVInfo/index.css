@@ -1,0 +1,51 @@
+.job {
+    padding: 2rem 4rem;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+}
+.job > * {
+    margin: 0.8rem;
+}
+.job__company {
+    grid-column: 1 / -1;
+    font-size: 1.4rem;
+    color: var(--color-text-secondary);
+}
+.job__location {
+    font-size: 1.5rem;
+    color: #424242;
+}
+.job__role {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #424242;
+}
+.job__time, .job__type {
+    font-size: 1.2rem;
+    color: var(--color-primary);
+    font-weight: 600;
+}
+.job__location, .job__time {
+    justify-self: end;
+}
+.hot {
+    background-color: #ffcdd2;
+}
+
+@media only screen and (max-width: 900px) { 
+    .job__role {
+        font-weight: 600;
+        font-size: 1.4rem;
+        color: #424242;
+    }
+    .job {
+        width: 80%;
+        padding: 2rem;
+    }
+}

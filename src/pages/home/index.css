@@ -1,6 +1,7 @@
 .site-layout-content {
     min-height: 608px;
     margin: 88px 24px 24px 24px;
-    background: #fff;
+    background: #eee;
     border-radius: 10px;
+    padding: 54px 204px;
   }

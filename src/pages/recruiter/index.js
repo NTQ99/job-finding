@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import Header from '../../component/header';
 
+import AddJob from '../../component/AddJobModal';
+
 import { Upload, Select, Form, Modal, Input, Button, Layout, message } from 'antd';
-import Job from '../../component/Job'
+import CVInfo from '../../component/CVInfo'
 import { UploadOutlined , FileAddOutlined } from '@ant-design/icons';
 import db from '../../common/firebase/db';
 import { FormInstance } from 'antd/lib/form';
@@ -14,7 +16,7 @@ const { Content } = Layout;
 const { Search } = Input;
 const { Option } = Select;
 
-class Home extends Component {
+class Recruiter extends Component {
     constructor(props) {
         super(props);
         this.formRef = React.createRef();
@@ -38,8 +40,8 @@ class Home extends Component {
     }
 
     async componentDidMount() {
-        let data = await this.getJobs(baseUrl);
-        this.setState({jobs: data, allJobs: data});
+        
+          
     }
 
     showModal = () => {
@@ -66,6 +68,20 @@ class Home extends Component {
     }
 
     render() {
+        const data = [{
+            "email" : "thinhlv@gmail.com",
+            "fullname" : "Lê Văn Thịnh",
+            "jobcategory" : "Developer",
+            "jobtype" : "Full-time",
+            "phone" : "0344561299"
+          },
+          {
+            "email" : "quoca2cvp@gmail.com",
+            "fullname" : "Nguyễn Tuấn Quốc",
+            "jobcategory" : "All Job Category",
+            "jobtype" : "All working type",
+            "phone" : "0344561299"
+          }];
         const { visible, loading } = this.state;
 
         const formItemLayout = {
@@ -130,98 +146,24 @@ class Home extends Component {
                 </Button>,
                 ]}
             >
-                <Form
-                    {...formItemLayout}
-                    ref={this.formRef}
-                    name="CV Info"
-                    initialValues={{
-                        prefix: '84',
-                    }}
-                    scrollToFirstError
-                >
-                    <Form.Item
-                        name="fullname"
-                        label="Full Name"
-                        rules={[{required: true, message: 'Please input your full name!'}]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        name="email"
-                        label="Email"
-                        rules={[
-                            {
-                                type: 'required',
-                                message: 'The input is not valid email!'
-                            },
-                            {
-                                required: true,
-                                message: 'Please input your email!',
-                            }
-                        ]}
-                    >
-                        <Input defaultValue={localStorage.email} />
-                    </Form.Item>
-                    <Form.Item
-                        name="phone"
-                        label="Phone Number"
-                        rules={[{ required: true, message: 'Please input your phone number!' }]}
-                    >
-                        <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-                    </Form.Item>
-                    <Form.Item
-                        name="file"
-                        label="CV File"
-                        rules={[{ required: true, message: 'Please input your CV file!' }]}
-                    >
-                        <Upload {...upload}>
-                            <Button icon={<UploadOutlined />}>Upload CV</Button>
-                        </Upload>
-                    </Form.Item>
-                    <Form.Item
-                        name="jobtype"
-                        label="Job Working Type"
-                    >
-                        <Select defaultValue="All working type">
-                            <Option value="All working type">All working type</Option>
-                            <Option value="Full-time">Full-time</Option>
-                            <Option value="Part-time">Part-time</Option>
-                            <Option value="Internship">Internship</Option>
-                            <Option value="Freelancer">Freelancer</Option>
-                            <Option value="Other">Other</Option>
-                        </Select>
-                    </Form.Item>
-                    <Form.Item
-                        name="jobcategory"
-                        label="Job Category"
-                    >
-                        <Select defaultValue="All categories">
-                            <Option value="All categories">All categories</Option>
-                            <Option value="Doctor">Doctor</Option>
-                            <Option value="Sale">Sale</Option>
-                            <Option value="Developer">Developer</Option>
-                            <Option value="Education">Education</Option>
-                            <Option value="Other">Other</Option>
-                        </Select>
-                    </Form.Item>
-                </Form>
+                <AddJob />
             </Modal>
         )
         return (
             <div>
                 <Header>
-                    {localStorage.accounttype === '0' && <Button style={{margin: '12px'}} icon={<FileAddOutlined />} onClick={this.showModal}>
-                        Add CV
+                    {localStorage.accounttype === '1' && <Button style={{margin: '12px'}} icon={<FileAddOutlined />} onClick={this.showModal}>
+                        Add Job
                     </Button>}
                     {CVModal}
-                    <Search placeholder="search job" onSearch={this.onSearch} style={{ position: 'absolute', left: 200, top: '50%', transform: 'translateY(-50%)' ,width: 200 }} />
+                    <Search placeholder="search CV" onSearch={this.onSearch} style={{ position: 'absolute', left: 200, top: '50%', transform: 'translateY(-50%)' ,width: 200 }} />
                 </Header>
                 <Content>
                     <div className="site-layout-content">
                         <div className="job-list">
-                            <h3 className="job-list__text"> Top Jobs </h3>
+                            <h3 className="job-list__text"> CVs Info </h3>
                             <div className="job-listing">
-                                {this.state.jobs.map(job => <Job key={job.id} job={job} />)}
+                                {data.map(adata => <CVInfo job={adata} />)}
                             </div>
                         </div>
                     </div>
@@ -231,4 +173,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default Recruiter;

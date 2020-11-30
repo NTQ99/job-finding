@@ -42,15 +42,16 @@ class Login extends Component {
 			case 'email':
 				this.setState({email: event.target.value});
 				break;
-			case 'password':
-				this.setState({password: event.target.value});
+				case 'password':
+					this.setState({password: event.target.value});
+					break;
+				case 'accounttype':
+					this.setState({accounttype: event.target.value});
 				break;
-			case 'accounttype':
-				this.setState({accounttype: event.target.value});
-				break;
-			default:
-				break;
-		}
+				default:
+					break;
+				}
+				console.log(this.state);
 	}
 
 	async handleLogin(event) {
@@ -59,6 +60,7 @@ class Login extends Component {
 		if (userData !== undefined) {
 			localStorage.setItem('uid', userData.uid);
 			localStorage.setItem('accounttype', userData.accounttype);
+			localStorage.setItem('email', userData.email);
 			if (userData.accounttype === '0') {
 				this.props.history.push('/home');
 			} else {
@@ -69,10 +71,12 @@ class Login extends Component {
 
 	async handleRegister(event) {
 		event.preventDefault();
+		console.log(this.state);
 		let uid = await auth.createNewAccount(this.state);
 		if (uid !== undefined) {
 			localStorage.setItem('uid', uid);
 			localStorage.setItem('accounttype', this.state.accounttype);
+			localStorage.setItem('email', this.state.email);
 			if (this.state.accounttype === '0') {
 				this.props.history.push('/home');
 			} else {
@@ -91,7 +95,7 @@ class Login extends Component {
 						</div>
 						<div className="login100-form validate-form">
 							<span className="login100-form-title">
-								Job Finding
+								TechJob
 							</span>
 							<Tabs defaultActiveKey="1" centered>
 								<TabPane tab="Login" key="1">
@@ -151,9 +155,9 @@ class Login extends Component {
 											<span className="txt3" style={{margin: "0 20px", fontWeight: "bold"}}>
 												I am:&nbsp;
 											</span>
-											<input className="radio-input" type="radio" name="accouttype" value="1" />
+											<input className="radio-input" type="radio" name="accounttype" value="1" />
 											<label className="txt3" style={{marginRight: "10px"}}>recruiter</label>
-											<input className="radio-input" type="radio" name="accouttype" value="0" defaultChecked={true}/>
+											<input className="radio-input" type="radio" name="accounttype" value="0" defaultChecked={true}/>
 											<label className="txt3">candidate</label>
 										</div>
 										

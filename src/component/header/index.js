@@ -7,23 +7,7 @@ import { FileAddOutlined, LoginOutlined, SearchOutlined, BellOutlined, UserOutli
 
 import './style.css';
 
-let logout = async () => {
-    await auth.logoutAccount();
-    window.location.reload();
-}
 
-const menu = (
-    <Menu>
-      <Menu.Item key="1" icon={<UserOutlined />}>
-        {localStorage.email}
-      </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key="2" icon={<LogoutOutlined />} onClick={logout}>
-        Logout
-      </Menu.Item>
-    </Menu>
-  );
-  
 
 class Header extends Component {
     constructor(props) {
@@ -34,7 +18,7 @@ class Header extends Component {
             isRecruiter: false
         }
     }
-
+    
     componentDidMount() {
         if (localStorage.uid) {
             this.setState({isLogin: true});
@@ -48,8 +32,14 @@ class Header extends Component {
             });
         }
     }
+    
     returnHome() {
         window.open('/home', '_self');
+    }
+    
+    async logout() {
+        await auth.logoutAccount();
+        window.location.reload();
     }
 
     openSignIn() {
@@ -57,12 +47,24 @@ class Header extends Component {
     }
     
     render() {
+        const menu = (
+            <Menu>
+                <Menu.Item key="1" icon={<UserOutlined />}>
+                    {localStorage.email}
+                </Menu.Item>
+                <Menu.Divider />
+                <Menu.Item key="2" icon={<LogoutOutlined />} onClick={this.logout}>
+                    Logout
+                </Menu.Item>
+            </Menu>
+        );
+
         return (
             <Layout className="layout">
                 <Layout.Header style={{ color: 'white', display: 'flex', position: 'fixed', zIndex: 1, width: '100%', padding: '0', background: '#00255d', boxShadow: '0 2px 8px #505050' }}>
                     <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: '50%'}}>
                         <span style={{margin: '12px', fontSize: '20pt'}}>
-                            JobFinding
+                            TechJob
                         </span>
                     </div>
                     <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '50%'}}>
